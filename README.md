@@ -1,1 +1,1 @@
-# kulpay_ng
+# nekede_ocr
