@@ -13,7 +13,7 @@ import Collections from "../pages/Admin/Collections";
 import Vendors from "../pages/Admin/Vendors";
 import SchoolDepartments from "../pages/Admin/SchoolDepartments";
 import SettlementReport from "../pages/Admin/Report/SettlementReport";
-import CollectionReport from "../pages/Admin/Report/CollectionReport";
+import CollectionReport from "../pages/Admin/Report/ocrsheet";
 import AjaxTable from "../pages/Admin/Report/ajaxTable";
 import Resultview from "../pages/Admin/resultview";
 
@@ -36,8 +36,8 @@ const AdminBody = (props) => {
 									<Route path={'/admin/collections'} component={Collections} exact={true}/>
 									<Route path={'/admin/vendors'} component={Vendors} exact={true}/>
 									<Route path={'/admin/schooldepartments'} component={SchoolDepartments} exact={true}/>
-									<Route path={'/admin/settlementreport'} component={SettlementReport} exact={true}/>
-									<Route path={'/admin/collectionreport'} component={CollectionReport} exact={true}/>
+									<Route path={'/admin/sheetupload'} component={SettlementReport} exact={true}/>
+									<Route path={'/admin/ocr_manipulation'} component={CollectionReport} exact={true}/>
 									<Route path={'/admin/ajaxtable'} component={AjaxTable} exact={true}/>
 									<Route path={'/admin/resultview'} component={Resultview} exact={true}/>
 									{/* <Route path={'/admin/newCollection'} component={NewCollection} exact={true}/> */}

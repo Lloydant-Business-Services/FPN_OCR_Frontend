@@ -24,12 +24,12 @@ import { stateKeys, BASE_URL } from "../../../redux/actions";
 
 const columns = [
     { title: "SN", dataIndex: "key", key: "key" },
-    { title: "Collection", dataIndex: "name", key: "name" },
-    { title: "Amount", dataIndex: "amount", key: "amount" },
-    { title: "Collection Key", dataIndex: "collectionKey", key: "collectionKey" },
-    { title: "Date Created", dataIndex: "createdDate", key: "createdDate" },
-    { title: "Fixed Amount?", dataIndex: "fixAmount", key: "fixAmount" },
-    { title: "Status", dataIndex: "status", key: "status" },
+    { title: "Programme", dataIndex: "name", key: "name" },
+    { title: "Department", dataIndex: "amount", key: "amount" },
+    { title: "Session", dataIndex: "collectionKey", key: "collectionKey" },
+    { title: "Semester", dataIndex: "createdDate", key: "createdDate" },
+    { title: "Level", dataIndex: "fixAmount", key: "fixAmount" },
+    { title: "Sheet Preview", dataIndex: "status", key: "status" },
     //   {
     //     title: 'Action',
     //     dataIndex: '',
@@ -859,7 +859,7 @@ class SettlementReport extends Component {
                                         <div className="col-sm-12">
                                             <div className="form-group">
                                                 <label className="manrope-text-light" style={{ fontSize: "13px", marginBottom: "0rem" }}>
-                                                    Collection Name
+                                                    {/* Collection Name */}
                                                 </label>
                                                 <br />
                                                 {/* <small style={{color:'red'}}>Invoice number invalid <i className="fa fa-warning"/></small> */}

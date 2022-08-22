@@ -27,6 +27,7 @@ import logo from "../../assets/images/17.png";
 import { WhisperSpinner, RainbowSpinner, SwapSpinner, StageSpinner } from "react-spinners-kit";
 import $ from "jquery";
 import { Progress, Tooltip } from "antd";
+import "../../assets/css/pie.css"
 
 const LineData = {
     labels: ["Acc", "Msc", "Pol", "Eco", "Soc", "Geo"],
@@ -229,14 +230,15 @@ class SuperAdminDashboard extends Component {
             {/* <Toaster position="top-center" reverseOrder={false} /> */}
 
             <div className="container-fluid py-5">
-                <div className="row">
+                <div className="row mt-3">
                 <div className="col-12 col-sm-12 col-xl-6 mt-2 mt-xl-0">
                 <h1 className="manrope-text" style={!isMobile ? { fontSize: "36px", color: "#2E2C34" } : { fontSize: "24px", color: "#2E2C34" }}>
                     {/* <Unicons.UilApps size="24" className="mr-2"/> */}
-                    Good {resolveDateTime("timeOfDay")}, Admin
+                    {/* Good {resolveDateTime("timeOfDay")}, Admin */}
+                    Welcome, Admin
                 </h1>
                 <p className="manrope-text-light" style={{ fontSize: "14px", marginTop:'-16px' }}>
-                    Here’s what’s going on with your fee collection
+                    Dashboard Summary
                 </p>
                 </div>
                 <div className="col-12 col-sm-12 col-xl-6 mt-2 mt-xl-0" style={{textAlign:'right'}}>
@@ -260,14 +262,14 @@ class SuperAdminDashboard extends Component {
                                            Verified Results
                                         </p>
                                         <p className="mb-0 manrope drk-text" style={{ fontSize: "24px" }}>
-                                           430
+                                           14
                                         </p>
                                     </div>
 
                                     <div className="mt-2">
                                         <div className="" style={{ marginTop: "40px" }}>
                                             {/* <Unicons.UilBuilding size="20"/> */}
-                                            <img src={ic_up} style={{ width: "16px", height: "16px" }} />
+                                            {/* <img src={ic_up} style={{ width: "16px", height: "16px" }} /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -284,14 +286,14 @@ class SuperAdminDashboard extends Component {
                                            Unverified Result
                                         </p>
                                         <p className="mb-0 manrope drk-text" style={{ fontSize: "24px" }}>
-                                           2,322
+                                           122
                                         </p>
                                     </div>
 
                                     <div className="mt-2">
                                         <div className="" style={{ marginTop: "40px" }}>
                                             {/* <Unicons.UilBuilding size="20"/> */}
-                                            <img src={ic_down} style={{ width: "16px", height: "16px" }} />
+                                            {/* <img src={ic_down} style={{ width: "16px", height: "16px" }} /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -308,13 +310,13 @@ class SuperAdminDashboard extends Component {
                                            Total Verified Student
                                         </p>
                                         <p className="mb-0 manrope drk-text" style={{ fontSize: "24px" }}>
-                                            1,344
+                                           344
                                         </p>
                                     </div>
 
                                     <div className="mt-2">
                                         <div className="" style={{ marginTop: "40px" }}>
-                                            <img src={ic_down} style={{ width: "16px", height: "16px" }} />
+                                            {/* <img src={ic_down} style={{ width: "16px", height: "16px" }} /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -326,14 +328,14 @@ class SuperAdminDashboard extends Component {
                
 
                 <div className="row" style={!isMobile ? { marginTop: "2vh" } : null}>
-
+          
                     <div className="col-12 col-sm-6 col-xl-6 mt-2 mt-xl-0">
                         <div className="card-dash flex-fill">
                             <div className="card-body p-3">
                                 <div className="media">
                                     <div className="media-body">
                                         <p className="manrope-text" style={{ fontSize: "12px" }}>
-                                            Disbursements
+                                            Chart
                                         </p>
                                        
                                     </div>
@@ -342,7 +344,7 @@ class SuperAdminDashboard extends Component {
                                         <div className="" style={{textAlign: "right" }}>
                                            
                                             <p className="manrope-text-light" style={{ fontSize: "12px", color: "#84818A" }}>
-                                                This month
+                                                Departments
                                             </p>
                                         </div>
                                     </div>
@@ -352,20 +354,7 @@ class SuperAdminDashboard extends Component {
                                 <div className="col-sm-12 col-xl-9">
                                 <Bar data={data} options={options} width={50} height={23} />
                                 </div>
-                                <div className="col-sm-12 col-xl-3">
-                                    <p className="manrope drk-text" style={{fontSize:'18px', lineHeight:'16px'}}>₦ 3,575
-                                    <br/>
-                                    <span className="manrope-text-light" style={{fontSize:'12px', color:'#84818A'}}>Avg. disbursed</span>
-                                    </p>
-                                    <p className="manrope drk-text" style={{fontSize:'18px', lineHeight:'16px'}}>85.0%
-                                    <br/>
-                                    <span className="manrope-text-light" style={{fontSize:'12px', color:'#84818A'}}>Average Payed</span>
-                                    </p>
-                                    <p className="manrope drk-text" style={{fontSize:'18px', lineHeight:'16px'}}>₦ 24,500
-                                    <br/>
-                                    <span className="manrope-text-light" style={{fontSize:'12px', color:'#84818A'}}>Total Payout</span>
-                                    </p>
-                                </div>
+                                
                                 </div>
                             </div>
                         </div>
@@ -377,7 +366,7 @@ class SuperAdminDashboard extends Component {
                                 <div className="media">
                                     <div className="media-body">
                                         <p className="manrope-text" style={{ fontSize: "12px" }}>
-                                        Bonus Performance
+                                            Chart
                                         </p>
                                        
                                     </div>
@@ -386,57 +375,30 @@ class SuperAdminDashboard extends Component {
                                         <div className="" style={{textAlign: "right" }}>
                                            
                                             <p className="manrope-text-light" style={{ fontSize: "12px", color: "#84818A" }}>
-                                                This month
+                                                Departments
                                             </p>
                                         </div>
                                     </div>
                                 </div>
-                                <hr style={{ marginTop: "-0.7rem", marginBottom:'30px' }} />
-                                <div className="row" style={{marginTop:'-20px'}}>
-                                <div className="col-sm-12 col-xl-12">
-                                <table class="table table-borderless super-table">
-                                            <thead>
-                                                <tr className="manrope-text" style={{color:'#84818A', fontSize:'12px'}}>
-                                                    <th>DEPARTMENT</th>
-                                                    <th>%</th>
-                                                    <th>TOTAL</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr >
-                                                    <td className="manrope drk-text"><img src={green}/> &nbsp; Accounting</td>
-                                                    <td className="manrope-text-light">10%</td>
-                                                    <td className="manrope-text-light">₦ 3,900</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="manrope drk-text"><img src={orange}/> &nbsp; Administration</td>
-                                                    <td className="manrope-text-light">10%</td>
-                                                    <td className="manrope-text-light">₦ 3,900</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="manrope drk-text"><img src={pink}/> &nbsp; Customer Support</td>
-                                                    <td className="manrope-text-light">10%</td>
-                                                    <td className="manrope-text-light">₦ 3,900</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="manrope drk-text"><img src={ash}/> &nbsp; Finance</td>
-                                                    <td className="manrope-text-light">10%</td>
-                                                    <td className="manrope-text-light">₦ 3,900</td>
-                                                </tr>
-                                                <tr>
-                                                    <td className="manrope drk-text"><img src={yellow}/> &nbsp; Human Resource</td>
-                                                    <td className="manrope-text-light">10%</td>
-                                                    <td className="manrope-text-light">₦ 3,900</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                
+                                <div className="row" style={{marginTop:'20px'}}>
+                               <center>
+                               <div className="col-sm-12 col-xl-9">
+                                <div class="wrapper">
+  <div class="d1"><div><span>60%</span></div></div>
+  <div class="d2"><div><span>22%</span></div></div>
+  <div class="d3"><div><span>8%</span></div></div>
+  <div class="d4"><div><span>7%</span></div></div>
+  <div class="d5"><div><span>3%</span></div></div>
+</div>
                                 </div>
-                              
+                               </center>
+                                
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    
                
                 </div>
             </div>

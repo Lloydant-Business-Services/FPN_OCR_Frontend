@@ -116,7 +116,7 @@ const Endpoint = {
         return axios.get(`/InstitutionType/`, headers)
     },
     getDepartments: () => {
-        return axios.get(`/Department/`, headers)
+        return axios.get(`/Department/GetDepartments`, headers)
     },
     getFaculties: () => {
         return axios.get(`/Faculty/`, headers)
@@ -175,8 +175,8 @@ const Endpoint = {
         return axios.get(`/Collection/GetAllActiveLevelAlt`, headers)
     },
 
-    getInstitutionProgramme: (institutionId, status) => {
-        return axios.get(`/Programme/GetInstitutionProgramme?InstitutionId=${institutionId}&status=${status}`, headers)
+    getAllProgrammes: () => {
+        return axios.get(`/Programme/GetAllProgramme`, headers)
         //return axios.get(`Programme/GetInstitutionProgramme?InstitutionId=95da019c-7762-48f4-a2be-ff61f599a0fd&status=${true}`, headers)
     },
 
@@ -186,7 +186,19 @@ const Endpoint = {
     //Reporting
     getCollectionBy: (collectionId, dateFrom, dateTo) => {
         return axios.get(`/Collection/CollectionReportBy?collectionId=${collectionId}&DateFrom=${dateFrom}&DateTo=${dateTo}`, headers)
-    }
+    },
+
+    getAllSemester: () => {
+        return axios.get(`/Semster/GetAllSemester`, headers)
+    },
+    getAllLevel: () => {
+        return axios.get(`/Level/GetLevels`, headers)
+    },
+
+    getUnverifiedresultsBy: (programmeId, departmentId, sessionId, semesterId, levelId) => {
+        return axios.get(`ResultVetting/ProcessSheetForDisplayAndManipulation?departmentId=${departmentId}&programmeId=${programmeId}&sessionId=${sessionId}&semesterId=${semesterId}&levelId=${levelId}`, headers)
+    },
+    
     
 };
 

@@ -101,14 +101,13 @@ class SignIn extends Component {
             }
             
                 $("#preloader").fadeOut("slow");
-            
         })
         .catch((error) => {
             //handleFormSubmissionError(error, this);
 
-            this.setState({
-                loginMessage:error.statusText
-            })
+            // this.setState({
+            //     loginMessage:error?.statusText
+            // })
             console.log(error, "error")
          
             $("#preloader").fadeOut("slow");

@@ -29,14 +29,10 @@ const { Option, OptGroup } = Select;
 
 const columns = [
     { title: "SN", dataIndex: "key", key: "key" },
+    { title: "Matric Mumber", dataIndex: "regnumber", key: "regnumber" },
     { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Amount", dataIndex: "amount", key: "amount" },
     { title: "Programme", dataIndex: "programme", key: "programme" },
     { title: "Department", dataIndex: "department", key: "department" },
-    { title: "Matric Mumber", dataIndex: "matricnumber", key: "matricnumber" },
-    { title: "Invoice Number", dataIndex: "invoicenumber", key: "invoicenumber" },
-    { title: "Gateway", dataIndex: "gateway", key: "gateway" },
-    { title: "Payment Date", dataIndex: "paymentDate", key: "paymentDate" },
     // { title: "Fixed Amount?", dataIndex: "fixAmount", key: "fixAmount" },
     // { title: "Status", dataIndex: "status", key: "status" },
     //   {
@@ -50,47 +46,23 @@ const columns = [
 const data = [
     {
         key: 1,
-        name: "O. GODSPEED MIRACLE",
-        amount: "N22,250.000",
-        invoicenumber: "FPI245162536",
-        matricnumber: "FPI/ACC/0001",
-        paymentDate: "02-02-2022",
-        programme: "HND FULL-TIME",
-        department: "ACCOUNTANCY",
-        gateway: "REMITA",
+        name: <input type="text" style={{border:"none", background:"transparent"}} defaultValue="O. GODSPEED MIRACLE"/>,
+        regnumber: <input type="text" style={{border:"none", background:"transparent"}} defaultValue="FPN/POL/002"/>,
     },
     {
         key: 2,
         name: "OKEKE JULIAN CHIDINMA",
-        amount: "N22,250.000",
-        invoicenumber: "FPI2457783536",
-        matricnumber: "FPI/COMP/0002",
-        paymentDate: "07-02-2022",
-        programme: "ND PART-TIME",
-        department: "COMPUTER SCIENCE",
-        gateway: "REMITA",
+       
     },
     {
         key: 3,
         name: "DIALA EBERE ANN",
-        amount: "N22,250.000",
-        invoicenumber: "FPI7257783536",
-        matricnumber: "FPI/MC/0003",
-        paymentDate: "11-04-2022",
-        programme: "ND FULL-TIME",
-        department: "MASS COMMUNICATION",
-        gateway: "ETRANZACT",
+        
     },
     {
         key: 4,
         name: "ODOGWU BINTA CHIAMAKA",
-        amount: "N22,250.000",
-        invoicenumber: "FPI971162536",
-        matricnumber: "FPI/ACC/0001",
-        paymentDate: "02-02-2022",
-        programme: "HND FULL-TIME",
-        department: "ACCOUNTANCY",
-        gateway: "PAYSTACK",
+        
     },
 ];
 class CollectionReport extends Component {
@@ -105,16 +77,17 @@ class CollectionReport extends Component {
         dateFrom: '0001-01-01',
         dateTo: '0001-01-01',
         loadSpinner:false,
+        dynamicRows:[],
         dynamicColumns: [
-            { title: "SN", dataIndex: "key", key: "key" },
-            { title: "Name", dataIndex: "name", key: "name" },
-            { title: "Amount", dataIndex: "amount", key: "amount" },
-            { title: "Programme", dataIndex: "programme", key: "programme" },
-            { title: "Department", dataIndex: "department", key: "department" },
-            { title: "Matric Mumber", dataIndex: "matricnumber", key: "matricnumber" },
-            { title: "Invoice Number", dataIndex: "invoicenumber", key: "invoicenumber" },
-            { title: "Gateway", dataIndex: "gateway", key: "gateway" },
-            { title: "Payment Date", dataIndex: "paymentDate", key: "paymentDate" },
+            // { title: "SN", dataIndex: "key", key: "key" },
+            // { title: "Registration Number", dataIndex: "registrationNumber", key: "registrationNumber" },
+            // { title: "Name", dataIndex: "name", key: "name" },
+            // { title: "Amount", dataIndex: "amount", key: "amount" },
+            // { title: "Programme", dataIndex: "programme", key: "programme" },
+            // { title: "Department", dataIndex: "department", key: "department" },
+            // { title: "Invoice Number", dataIndex: "invoicenumber", key: "invoicenumber" },
+            // { title: "Gateway", dataIndex: "gateway", key: "gateway" },
+            // { title: "Payment Date", dataIndex: "paymentDate", key: "paymentDate" },
         ],
         dynamicColumnsConstant: [
             { title: "SN", dataIndex: "key", key: "key" },
@@ -315,9 +288,25 @@ class CollectionReport extends Component {
         }
     }
 
-    handleChange = (value) => {
+    handleSession = (value) => {
         console.log(`selected ${value}`);
-        this.setState({ collectionSelect: value })
+        this.setState({ sessionId: value })
+    }
+    handleProgramme = (value) => {
+        console.log(`selected ${value}`);
+        this.setState({ programmeId: value })
+    }
+    handleDepartment = (value) => {
+        console.log(`selected ${value}`);
+        this.setState({ departmentId: value })
+    }
+    handleLevel = (value) => {
+        console.log(`selected ${value}`);
+        this.setState({ levelId: value })
+    }
+    handleSemester = (value) => {
+        console.log(`selected ${value}`);
+        this.setState({ semesterId: value })
     }
     onChangeDateFrom = (date, dateString) => {
         console.log(date, dateString);
@@ -334,272 +323,76 @@ class CollectionReport extends Component {
             globalCollectionId: collectionId,
         });
     };
-    loadPaymentGateways = () => {
-        Endpoint.getPaymentGateways()
-            .then((res) => {
-                var mappedData = res.data.map((x, i) => {
-                    return {
-                        key: i + 1,
-                        id: x.id,
-                        name: x.name.toUpperCase(),
-                        logo: x.logoLink,
-                        // x.logoLink != null ? (
-                        //     <div>
-                        //         <img src={BASE_URL + x.logoLink} style={{ width: "50px" }} />
-                        //     </div>
-                        // ) : (
-                        //     "-"
-                        // ),
-                        action: (
-                            <p style={{ fontSize: "13px" }}>
-                                {" "}
-                                <img src={editIcon} style={{ cursor: "pointer" }} /> &nbsp; &nbsp; &nbsp; &nbsp; <img src={deleteIcon} style={{ cursor: "pointer" }} />
-                            </p>
-                        ),
-                        description: (
-                            <>
-                                <div className="container-fluid">
-                                    <div className="row" style={{ paddingTop: "1px" }}>
-                                        <div className="col-sm-4">
-                                            <div class="form-group">
-                                                <label for="other_name" class="animated-label manrope-text" style={{ fontSize: "13px", top: "-1px" }}>
-                                                    Address:
-                                                </label>
-                                                <p style={{ fontSize: "13px" }}>{x.address}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
-                        ),
-                    };
-                });
-                this.setState({
-                    allGateways: mappedData,
-                });
-                setTimeout(() => {
-                    console.log(this.state.allGateways, "gateways");
-                }, 2000);
-                //$("#preloader").delay(450).fadeOut("slow");
+
+    loadActiveSession = () => {
+        Endpoint.getActiveSession()
+        .then(res => {
+            console.log(res.data, "session response")
+            this.setState({
+                sessionList:res.data
             })
-            .catch((error) => {
-                //loadDataError(error, this);
-            });
-    };
-    loadCollectionReportBy = () => {
-        this.setState({ loadSpinner: true, filterPool: false });
-
-        Endpoint.getCollectionBy(this.state.collectionSelect, this.state.dateFrom, this.state.dateTo)
-            .then((res) => {
-                //alert("1")
-                this.setState({ loadSpinner: false });
-
-                console.log(res.data, "collectionReport");
-                var mappedData = res.data.map((x, i) => {
-                    return {
-                        key: i + 1,
-                        name: x.studentName,
-                        amount: "N" + x.amount,
-                        programme: x.programmeName.toUpperCase(),
-                        department: x.departmentName,
-                        matricnumber: x.registrationNumber,
-                        invoicenumber: x.invoiceNumber,
-                        gateway: x.paymentGateway,
-                        paymentDate: x.datePaid
-
-                    }
-                })
-
-                this.setState({ collectionReportState: mappedData })
-
-            })
-            .catch((error) => {
-                console.log(error);
-                //this.loadDataError("Error saving vendor! Check that your connection is active");
-                //this.setState({isLoading:false})
-            });
-
-
-
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
+    loadLevel = () => {
+        Endpoint.getAllLevel()
+        .then(res => {
+            console.log(res.data, "level response")
+            this.setState({
+                levelList:res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    loadSemester = () => {
+        Endpoint.getAllSemester()
+        .then(res => {
+            console.log(res.data, "semester response")
+            this.setState({
+                semesterList:res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    loadProgramme = () => {
+        Endpoint.getAllProgrammes()
+        .then(res => {
+            console.log(res.data, "programme response")
+            this.setState({
+                programmeList:res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    loadDepartments = () => {
+        Endpoint.getDepartments()
+        .then(res => {
+            console.log(res.data, "dept response")
+            this.setState({
+                deptList:res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+    
+   
+  
     loadDataFromServer = () => {
         // $("#preloader").fadeIn();
+        this.loadActiveSession();
         this.loadCollectionReportBy();
         this.setState({ loadSpinner: true });
-        Endpoint.getInstitutionCollections(this.state.payLoad?.institutionId)
-            .then((res) => {
-                console.log(res.data, "rss");
-                var mappedData = res.data.map((x, i) => {
-                    let isComplete = false;
-                    let status = 0;
-                    Endpoint.getInstitutionCollectionsFeeSplit(x.collectionId)
-                        .then((res) => {
-                            //alert("1")
-                            console.log(res.data, "raw data");
-                            console.log(res, " data");
-                            if (res.data.length > 0) {
-                                isComplete = true;
-                                status = res.status;
-                                //alert(isComplete)
-                                this.setState({ collectionSplits: res.data });
-                                console.log(this.state.collectionSplits, "state");
-                                return <img src={badge} />;
-                            }
-                        })
-                        .catch((error) => {
-                            console.log(error);
-
-                        });
-
-                    return {
-                        key: i + 1,
-                        id: x.collectionId,
-                        name: x.collectionName.toUpperCase(),
-                        createdDate: x.createdDate != null ? x.createdDate.substring(0, 10) : "-",
-                        amount: x.amount != null ? currencyFormat(x.amount) : "-",
-                        collectionKey: x.collectionKey,
-                        fixAmount: x.fixAmount ? "Yes" : "No",
-                        status: (
-                            <img src={badge} />
-
-                        ),
-                        description: (
-                            <div className="container-fluid">
-                                <div className="row" style={{ paddingTop: "10px" }}>
-                                    <div className="col-sm-6">
-                                        <p className="manrope-text" style={{ fontSize: "17px" }}>
-                                            {x.collectionName}
-                                        </p>
-                                        <p className="manrope-text-light" style={{ fontSize: "12px", color: "#84818A", marginTop: "-20px" }}>
-                                            Your payment status for this month is payed for <span style={{ color: "#FFA043" }}>65%</span>
-                                            <br />
-                                            <br />
-                                            <span style={{ color: "#FFA043", cursor: "pointer" }} onClick={() => this.addCollectionSplit(x.collectionId, x.collectionName)}>
-                                                Add Collection Split &nbsp; <i className="fa fa-plus" />
-                                            </span>
-                                        </p>
-                                    </div>
-
-                                    <div className="col-sm-2">
-                                        <p className="manrope-text" style={{ fontSize: "10px", color: "#84818A" }}>
-                                            NO OF STUDENTS
-                                        </p>
-                                        <p className="manrope-text drk-text" style={{ fontSize: "16px", color: "#84818A", marginTop: "-10px" }}>
-                                            0
-                                        </p>
-                                    </div>
-                                    <div className="col-sm-2">
-                                        <p className="manrope-text" style={{ fontSize: "10px", color: "#84818A" }}>
-                                            TOTAL INFLOW
-                                        </p>
-                                        <p className="manrope-text drk-text" style={{ fontSize: "16px", color: "#84818A", marginTop: "-10px" }}>
-                                            ₦0.00
-                                        </p>
-                                    </div>
-                                    <div className="col-sm-2">
-                                        <p className="manrope-text" style={{ fontSize: "10px", color: "#84818A" }}>
-                                            EXPECTED INFLOW
-                                        </p>
-                                        <p className="manrope-text drk-text" style={{ fontSize: "16px", color: "#84818A", marginTop: "-10px" }}>
-                                            ₦0.00
-                                        </p>
-                                    </div>
-                                </div>
-                                <hr style={{ marginTop: "0rem", marginBottom: "13px" }} />
-                                <div className="row" style={{ paddingTop: "1px" }}>
-                                    <div className="col-sm-1">
-                                        <div class="form-group">
-                                            <label for="other_name" class="animated-label manrope-text" style={{ fontSize: "13px", top: "-1px" }}></label>
-                                            {/* <p style={{ fontSize: "13px" }}>{x.name} Business Services</p> */}
-                                        </div>
-                                    </div>
-
-                                    <div className="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="other_name" class="animated-label manrope-text" style={{ fontSize: "13px", top: "-1px" }}>
-                                                Account Name
-                                            </label>
-                                            {/* <p style={{ fontSize: "13px" }}>{x.name} Business Services</p> */}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="other_name" class="animated-label manrope-text" style={{ fontSize: "13px", top: "-1px" }}>
-                                                Account Number
-                                            </label>
-                                            {/* <p style={{ fontSize: "13px" }}>02363782</p> */}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2">
-                                        <div class="form-group">
-                                            <label for="other_name" class="animated-label manrope-text" style={{ fontSize: "13px", top: "-1px" }}>
-                                                Split Amount
-                                            </label>
-                                            {/* <p style={{ fontSize: "13px" }}>N21,000</p> */}
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-2">
-                                        <div class="form-group">
-                                            <label for="other_name" class="animated-label manrope-text" style={{ fontSize: "13px", top: "-1px" }}>
-                                                &nbsp;
-                                            </label>
-                                            {/* <p style={{ fontSize: "13px" }}>
-                                                {" "}
-                                                <img src={editIcon} style={{ cursor: "pointer" }} /> &nbsp; &nbsp; &nbsp; &nbsp; <img src={deleteIcon} style={{ cursor: "pointer" }} />
-                                            </p> */}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {x.collectionSplitList &&
-                                    x.collectionSplitList.map((t, i) => {
-                                        return (
-                                            <div className="row" style={{ paddingTop: "1px" }}>
-                                                <div className="col-sm-1">
-                                                    <div class="form-group">{/* <p style={{ fontSize: "13px" }}> {t.accountName}</p> */}</div>
-                                                </div>
-                                                <div className="col-sm-3">
-                                                    <div class="form-group">
-                                                        <p style={{ fontSize: "13px" }}> {t.accountName}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-3">
-                                                    <div class="form-group">
-                                                        <p style={{ fontSize: "13px" }}>
-                                                            {t.vendorBankName} {t.accountNumber}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-2">
-                                                    <div class="form-group">
-                                                        <p style={{ fontSize: "13px" }}>{currencyFormat(t.amount)}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-2">
-                                                    <div class="form-group">
-                                                        <p style={{ fontSize: "13px" }}>
-                                                            {" "}
-                                                            <img src={editIcon} style={{ cursor: "pointer" }} /> &nbsp; &nbsp; &nbsp; &nbsp; <img src={deleteIcon} style={{ cursor: "pointer" }} />
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        );
-                                    })}
-                            </div>
-                        ),
-                    };
-                });
-                this.setState({
-                    allCollections: mappedData,
-                    loadSpinner: false,
-                });
-                console.log(this.state.allCollections, "-");
-                $("#preloader").delay(450).fadeOut("slow");
-            })
-            .catch((error) => {
-                //loadDataError(error, this);
-            });
+     
 
         this.getInstitutionVendors();
         this.loadPaymentGateways();
@@ -860,6 +653,11 @@ class CollectionReport extends Component {
         //     console.log(payload);
         // });
         // this.loadDataFromServer();
+        this.loadProgramme()
+        this.loadLevel()
+        this.loadSemester()
+        this.loadActiveSession()
+        this.loadDepartments()
         enquireScreen((b) => {
             this.setState({
                 isMobile: b,
@@ -919,6 +717,60 @@ class CollectionReport extends Component {
         else {
             $('#dateFilter').toggle('fast')
         }
+    }
+    loadUnverifiedResult = () => {
+        this.setState({ loadSpinner: true, filterPool: false });
+
+        Endpoint.getUnverifiedresultsBy(this.state.programmeId, this.state.departmentId, this.state.sessionId, this.state.semesterId, this.state.levelId)
+            .then((res) => {
+                //alert("1")
+                this.setState({ loadSpinner: false });
+
+                console.log(res.data, "collectionReport");
+                if(res.data != null && res.data?.studentResultHeaderDto?.length > 0){
+                    var mappedHeader = res.data?.studentResultHeaderDto.map((x, i) => {
+                        return{
+                            //sn: i+1,
+                            title:x.name,
+
+                        }
+                    })
+                    this.setState({
+                        dynamicColumns: res?.data?.studentResultHeaderDto,
+                        indexHeader: res?.data?.studentResultHeaderDto.length
+                    })
+                }
+                var mappedData = res.data.studentResultDto.map((x, i) => {
+                    return {
+                        key: i + 1,
+                        registrationNumber: x.registrationNumber,
+                        name: x.name
+                        //name: x.studentName,
+                        // amount: "N" + x.amount,
+                        // programme: x.programmeName.toUpperCase(),
+                        // department: x.departmentName,
+                        // matricnumber: x.registrationNumber,
+                        // invoicenumber: x.invoiceNumber,
+                        // gateway: x.paymentGateway,
+                        // paymentDate: x.datePaid
+
+                    }
+                })
+
+                this.setState({ dynamicRows: res.data.studentResultDto })
+                setTimeout(() => {
+                    console.log(this.state.dynamicRows, this.state.indexHeader)
+                }, 2000);
+
+            })
+            .catch((error) => {
+                console.log(error);
+                //this.loadDataError("Error saving vendor! Check that your connection is active");
+                //this.setState({isLoading:false})
+            });
+
+
+
     }
     render() {
         require("antd/dist/antd.css");
@@ -1365,23 +1217,24 @@ class CollectionReport extends Component {
                             <br />
                             <div>
                                 <Space direction="horizontal">
-                                    Date Range? &nbsp; <Switch onChange={this.toggleDateFilter} />
+                                    Autosave &nbsp; <Switch onChange={this.toggleDateFilter} />
                                 </Space>
                             </div>
                             <br />
                             <div id="dateFilter" style={{ display: 'none' }}>
-                                <Space direction="horizontal">
+                                {/* <Space direction="horizontal">
                                     <DatePicker onChange={this.onChangeDateFrom} />
                                     <DatePicker onChange={this.onChangeDateTo} />
 
-                                </Space>
+                                </Space> */}
+                                <p style={{fontSize:"11px", color:"#03844d"}} className="">Autosave enabled. Chnages would be saved every two(2) minutes</p>
                             </div>
                             <Space>
-
-                                <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleChange}>
-                                    <OptGroup label="Department">
-                                        <Option value="Department">Select Collection</Option>
-                                        {this.state.allCollections && this.state.allCollections.map(x => {
+                            {/* sessionList */}
+                                <Select defaultValue="Session" style={{ width: 200 }} onChange={this.handleSession}>
+                                    <OptGroup label="Session">
+                                        <Option value="Session">Select Session</Option>
+                                        {this.state.sessionList && this.state.sessionList.map(x => {
                                             return (
                                                 <Option value={x.id}>{x.name}</Option>
                                             )
@@ -1391,36 +1244,75 @@ class CollectionReport extends Component {
 
                                 </Select>
 
-                                <Select defaultValue="Programme" style={{ width: 200 }} onChange={this.handleChange}>
+                                <Select defaultValue="Programme" style={{ width: 200 }} onChange={this.handleProgramme}>
                                     <OptGroup label="Programme">
                                         <Option value="Programme">Select Programme</Option>
-                                        <Option value="jack">Jack</Option>
-                                        <Option value="lucy">Lucy</Option>
+                                        {this.state.programmeList && this.state.programmeList.map(x => {
+                                            return(
+                                                <>
+                                                 <Option value={x.id}>{x.name}</Option>
+                                                </>
+                                            )
+                                        })}
+                                       
                                     </OptGroup>
 
                                 </Select>
-
-                                <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleChange}>
+                                <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleDepartment}>
                                     <OptGroup label="Department">
                                         <Option value="Department">Select Department</Option>
-                                        <Option value="jack">Jack</Option>
-                                        <Option value="lucy">Lucy</Option>
+                                        {this.state.deptList && this.state.deptList.map(x => {
+                                            return(
+                                                <>
+                                                 <Option value={x.id}>{x.name}</Option>
+                                                </>
+                                            )
+                                        })}
+                                       
                                     </OptGroup>
 
                                 </Select>
+                                
+                                <Select defaultValue="Semester" style={{ width: 200 }} onChange={this.handleSemester}>
+                                    <OptGroup label="Semester">
+                                        <Option value="Semester">Select Semester</Option>
+                                        {this.state.semesterList && this.state.semesterList.map(x => {
+                                            return(
+                                                <>
+                                                 <Option value={x.id}>{x.name}</Option>
+                                                </>
+                                            )
+                                        })}
+                                       
+                                    </OptGroup>
 
-                                <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleChange}>
+                                </Select>
+                                <Select defaultValue="Level" style={{ width: 200 }} onChange={this.handleLevel}>
+                                    <OptGroup label="Level">
+                                        <Option value="Level">Select Level</Option>
+                                        {this.state.levelList && this.state.levelList.map(x => {
+                                            return(
+                                                <>
+                                                 <Option value={x.id}>{x.name}</Option>
+                                                </>
+                                            )
+                                        })}
+                                       
+                                    </OptGroup>
+
+                                </Select>
+                                {/* <Select defaultValue="Semster" style={{ width: 200 }} onChange={this.handleChange}>
                                     <OptGroup label="Department">
-                                        <Option value="Department">Select Gateway</Option>
+                                        <Option value="School">Select School</Option>
                                         <Option value="jack">Jack</Option>
                                         <Option value="lucy">Lucy</Option>
                                     </OptGroup>
 
-                                </Select>
+                                </Select> */}
 
 
                                 <br />
-                                <button className="btn btn-primary" onClick={this.loadCollectionReportBy}>Load</button>
+                                <button className="btn btn-primary" onClick={this.loadUnverifiedResult}>Load</button>
                             </Space>
                             <br />
                             {this.state.loadSpinner ? (
@@ -1432,15 +1324,82 @@ class CollectionReport extends Component {
                             ) : (
 
                                 <Fade>
-                                     <Table
-                            columns={columns}
+                                    <table class="table table-bordered table-responsive mt-3" style={{background:"#fff"}}>
+  <thead>
+    <tr>
+
+        {this.state.dynamicColumns && this.state.dynamicColumns.map((x,i) => {
+            // <th scope="col">SN</th>
+
+            return(
+            <th scope="col">{x.title}</th>
+            )
+        })}
+      
+      {/* <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th> */}
+    </tr>
+  </thead>
+  <tbody>
+    {this.state.dynamicRows && this.state.dynamicRows.map((x,i) => {
+        var inputName = this.state.indexHeader++
+        var rowPicker = i+1
+        return(
+            <tr id={"row"+rowPicker}>
+                <td><input type="text" defaultValue={x.registrationNumber} id={x.registrationNumber.concat('',inputName)} name={x.registrationNumber.concat('',inputName)} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.name} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course1} name={x.name} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course2} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course3} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course4} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course5} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course6} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course7} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course8} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course8} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course9} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course9} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course10} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course11} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course12} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course13} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course14} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.carryOverCourse1} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.total} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.gpa} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.remark} style={{border:"none", background:"transparent"}} /></td>
+                
+            </tr>
+        )
+    })}
+    
+    {/* <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr> */}
+  </tbody>
+</table>
+<div className="">
+{this.state.dynamicRows && this.state.dynamicRows.length > 0 ? <button className="btn btn-primary">Save All</button> : null}
+</div>
+                                     {/* <Table
+                            columns={this.state.dynamicColumns}
                             expandable={{
                                 expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
                                 rowExpandable: (record) => record.name !== "Not Expandable",
                             }}
-                            dataSource={data}
+                            dataSource={this.state.dynamicRows}
                             className="manrope-text table-responsive"
-                        />
+                        /> */}
                                     {/* <Table
                                         columns={this.state.dynamicColumns}
                                        

@@ -18,6 +18,8 @@ import sch_dept_active from "../assets/images/sch_dept_active.png"
 import dash_inactive from "../assets/images/dash_inactive.png"
 import BursarActiveCol from "../assets/images/bursarActiveCol.png"
 import vendorActive from "../assets/images/vendorActive.png"
+import { Drawer, Button, Space, Radio, List, Typography, Divider } from 'antd';
+import {LoginOutlined} from '@ant-design/icons';
 
 import trans_white from "../assets/images/transac_white.svg"
 import logOutSvg from "../assets/images/dashprofile-icon.svg"
@@ -54,6 +56,11 @@ import {
 import { enquireScreen } from "enquire-js";
 
 import { useMergeState } from "../utils/helpers";
+const listStyle = {
+	color: '#000000b5',
+	cursor:'pointer',
+	fontWeight:'700'
+}
 let isMobile;
 enquireScreen((b) => {
 	isMobile = b;
@@ -70,7 +77,9 @@ const AdminHeader = (props) => {
 		activeClasses: [false, false, false, false],
 		user: getUser(),
 	});
-
+	const onClose = () => {
+		setNavValues({visible:false});
+	  };
 	// toggles collapse between opened and closed (true/false)
 	const toggleCollapse = () => {
 		setNavValues({
@@ -150,9 +159,58 @@ const AdminHeader = (props) => {
 
 		}
 	}, []);
-
+	const showDrawer = (e) => {
+		setNavValues({visible:true});
+		// e.preventDefault();
+			
+		// 	getRedux = reduxState(stateKeys.USER, user);
+		// 	console.log(user, "usee")
+	
+		// 	console.log(getRedux.user[stateKeys.USER], "get")
+	  };
+	 
 	return (
 		<>
+		<Drawer
+        title={<><img alt={'logo'} style={{width:'50px', height:'50px'}} className="navbar-brand-img mr-2" src={logo} />System Settings</>}
+        placement={'left'}
+        width={500}
+        onClose={onClose}
+        visible={navValues.visible}
+        extra={
+          <Space>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button type="primary" onClick={onClose}>
+              OK
+            </Button>
+          </Space>
+        }
+      >
+          <div className="manrope-text">
+         
+    <List
+   
+    >
+        <List.Item >
+            <Link style={listStyle} to="/superadmin/schooldepartments" onClick={onClose}>
+        <LoginOutlined /> &nbsp; Department/School Settings
+        </Link>
+        </List.Item>
+        <List.Item>
+        <Link style={listStyle} to="/superadmin/tellerbanks" onClick={onClose}>
+        <LoginOutlined /> &nbsp; Course Settings
+        </Link>
+        </List.Item>
+        <List.Item>
+        <Link style={listStyle} to="/superadmin/paymentgateways" onClick={onClose}>
+        <LoginOutlined /> &nbsp; Session/Semester Settings
+        </Link>
+        </List.Item>
+        </List>
+        
+              </div>
+       
+      </Drawer>
 			<Navbar className="navbar-vertical fixed-left navbar-dark" style={{ backgroundColor: "#FFF" }} expand="md" id="sidenav-main" >
 				<Container fluid>
 					{/* Toggler */}
@@ -266,11 +324,11 @@ const AdminHeader = (props) => {
 									style={{}}
 								>
 									<ul className="nav-sm flex-column nav rep_nav">
-										<NavLink to="/admin/settlementreport" tag={Link}>
+										<NavLink to="/admin/sheetupload" tag={Link}>
 											Upload Sheet
 										</NavLink>
 
-										<NavLink to="/admin/collectionreport" tag={Link}>
+										<NavLink to="/admin/ocr_manipulation" tag={Link}>
 											Pull/Modify Sheet
 										</NavLink>
 
@@ -338,8 +396,8 @@ const AdminHeader = (props) => {
 							</NavItem> */}
 							{!isMobile ? <div className="sub_div2 container">
 								<hr />
-								<p><a className="manrope-text" >Settings</a></p>
-								<p><a className="manrope-text">Contact us</a></p>
+								<p onClick={showDrawer}><a className="manrope-text" >Settings</a></p>
+								{/* <p><a className="manrope-text">Contact us</a></p> */}
 							</div> : null}
 						</Nav>
 
@@ -356,8 +414,8 @@ const AdminHeader = (props) => {
 
 						<Nav className="align-items-center d-none d-md-flex" navbar>
 							<span>
-								<img src={searchSvg} style={{ width: '24px', height: '24px', marginRight: '40px' }} />
-								<img src={notificatiionSvg} style={{ width: '24px', height: '24px', marginRight: '40px' }} />
+								{/* <img src={searchSvg} style={{ width: '24px', height: '24px', marginRight: '40px' }} /> */}
+								{/* <img src={notificatiionSvg} style={{ width: '24px', height: '24px', marginRight: '40px' }} /> */}
 							</span>
 							<UncontrolledDropdown nav>
 								<DropdownToggle className="pr-0" nav>
