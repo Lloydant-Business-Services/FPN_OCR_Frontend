@@ -1,6 +1,6 @@
-import {useState} from "react";
+import { useState } from "react";
 import store from "../redux/store";
-import {stateKeys} from "../redux/actions";
+import { stateKeys } from "../redux/actions";
 import { login } from "../Redux_Slices/userSlice";
 
 
@@ -20,45 +20,45 @@ export const PAGINATOR_DEFAULT = {
 }
 
 
-let nthDerivation  = (data) => {
-    if(parseInt(data) == 1 || parseInt(data) == 21 || parseInt(data) == 31){
-      return "st"
+let nthDerivation = (data) => {
+    if (parseInt(data) == 1 || parseInt(data) == 21 || parseInt(data) == 31) {
+        return "st"
     }
-    else if(parseInt(data) == 2 || parseInt(data) == 22){
-      return "nd"
+    else if (parseInt(data) == 2 || parseInt(data) == 22) {
+        return "nd"
     }
-    else if(parseInt(data) == 3 || parseInt(data) == 23){
-      return "rd"
+    else if (parseInt(data) == 3 || parseInt(data) == 23) {
+        return "rd"
     }
-    else{
-      return "th"
+    else {
+        return "th"
     }
-    
-  }
 
- export function resolveDateTime(action){
+}
+
+export function resolveDateTime(action) {
     var objToday = new Date();
-	var weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
-	var months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-	var curMonth = months[objToday.getMonth()];
-	var curDay = weekday[objToday.getDay()];
-	var dayOfMonth = today + ( objToday.getDate() < 10) ? '0' + objToday.getDate() : objToday.getDate();
-	var curYear = objToday.getFullYear();
-    var today =  dayOfMonth + nthDerivation(dayOfMonth) + " " + curMonth + ", " + curYear;
-	var timeOfDay = objToday.getHours() >= 0 &&  objToday.getHours() < 12 ? "morning" : objToday.getHours() >= 12 && objToday.getHours() < 4 ?  "afternoon" : "evening" 
+    var weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+    var months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    var curMonth = months[objToday.getMonth()];
+    var curDay = weekday[objToday.getDay()];
+    var dayOfMonth = today + (objToday.getDate() < 10) ? '0' + objToday.getDate() : objToday.getDate();
+    var curYear = objToday.getFullYear();
+    var today = dayOfMonth + nthDerivation(dayOfMonth) + " " + curMonth + ", " + curYear;
+    var timeOfDay = objToday.getHours() >= 0 && objToday.getHours() < 12 ? "morning" : objToday.getHours() >= 12 && objToday.getHours() < 4 ? "afternoon" : "evening"
 
-    if(action === "today"){
+    if (action === "today") {
         return today;
     }
-    else if(action === "timeOfDay"){
+    else if (action === "timeOfDay") {
         console.log(objToday.getHours())
         return timeOfDay;
     }
-    else if(action === "currentDay"){
+    else if (action === "currentDay") {
         return curDay;
     }
 
- }
+}
 
 
 
@@ -110,20 +110,20 @@ export function vd(value, defaultValue) {
 export function handleAxiosError(error, el) {
     el = vd(el, '.notify');
     let message = getErrorMessage(error);
-    notify({'status': false, 'message': message}, el);
+    notify({ 'status': false, 'message': message }, el);
 }
 
 export function handleFormSubmissionError(error, component) {
     let message = getErrorMessage(error);
-    component.setState({errorMessage: message, success: false, error: true, loading: false});
+    component.setState({ errorMessage: message, success: false, error: true, loading: false });
 }
 
 export function handleAxiosErrorWithState(error, state) {
     let message = getErrorMessage(error);
     if (typeof state === 'function')
-        state({message: message, success: false, error: true, warning: false, loading: false});
+        state({ message: message, success: false, error: true, warning: false, loading: false });
     else
-        notify({'status': false, 'message': message});
+        notify({ 'status': false, 'message': message });
 }
 
 export function getErrorMessage(xhr) {
@@ -296,7 +296,7 @@ export function copyToClipboard(text, notify) {
 
 export function parseName(fullName) {
     let name = fullName || "";
-    let result = {firstName: '', lastName: '', otherName: ''};
+    let result = { firstName: '', lastName: '', otherName: '' };
 
     if (name.length > 0) {
         let nameTokens = name.match(/[A-ZÁ-ÚÑÜ][a-zá-úñü]+|([aeodlsz]+\s+)+[A-ZÁ-ÚÑÜ][a-zá-úñü]+/g) || [];
@@ -370,11 +370,11 @@ export function setReduxState(value, key) {
     store.dispatch({
         'type': key,
         'value': value
-    });   
+    });
 }
 
 // export function setReduxState(value, key) {
-    
+
 //     store.dispatch(
 //         login({
 //             user:value
@@ -383,7 +383,86 @@ export function setReduxState(value, key) {
 
 //     console.log(store.getState(), "inFunc")
 // }
+// export function resolveTotalGradePoint(gradeArr, courseUnitArr){
+//     var totalGradePoint = 0;
+//     var increment = 0;
+//     if(gradeArr != null && gradeArr.length > 0){
+//         for(var i = 0; i < gradeArr.length; i++){
+//             var calc = gradePointReturn(gradeArr[i]);
+//             var get_course_unit = courseUnitArr[increment];
+//             if(get_course_unit != null){
+//                 totalGradePoint = get_course_unit * calc
+//             }
+//             else{
+//                 totalGradePoint = totalGradePoint+calc;
+//                 increment++
+//             }
 
+//         }
+//         console.log(totalGradePoint, "total GP")
+//         return totalGradePoint;
+//     }
+// }
+export function resolveTotalGradePoint(gradeArr, courseUnitArr) {
+    var totalGradePoint = 0;
+    var increment = 0;
+    var totalCourseUnit = 0;
+if(courseUnitArr < 7){
+    return 0;
+}
+    if (gradeArr != null && gradeArr.length > 0) {
+        for (var i = 0; i < gradeArr.length; i++) {
+            let calc;
+            if (gradeArr[i] == "-") {
+                //do nothing
+                console.log("do nothing")
+            } else {
+                calc = gradePointReturn(gradeArr[i]);
+                var get_course_unit = courseUnitArr[increment];
+
+                var sumOfunitAndGradePointMultiplication = 0;
+                if (get_course_unit != null) {
+                    totalCourseUnit = totalCourseUnit + parseInt(get_course_unit);
+                    console.log(increment)
+                    sumOfunitAndGradePointMultiplication = get_course_unit * calc;
+                    totalGradePoint = totalGradePoint + sumOfunitAndGradePointMultiplication
+                    increment++
+                } else {
+                    increment++
+                }
+            }
+
+
+        }
+        console.log(totalGradePoint / totalCourseUnit, "total GP")
+        return totalGradePoint / totalCourseUnit;
+    }
+}
+
+function gradePointReturn(value) {
+    switch (value) {
+        case "A":
+            return 4
+        case "AB":
+            return 3.5
+        case "B":
+            return 3
+        case "BC":
+            return 2.5
+        case "C":
+            return 2
+        case "CD":
+            return 1.5
+        case "D":
+            return 1
+        case "E":
+            return 0.5
+        case "F":
+            return 0
+        default:
+            return 0
+    }
+}
 export function reduxState(key, defaultValue) {
     let state = store.getState();
     var __stringify = JSON.stringify(state);
@@ -391,14 +470,14 @@ export function reduxState(key, defaultValue) {
     var __parse = JSON.parse(__stringify);
     console.log(__parse, "parsed")
     //var dd = JSON.stringify(state)
-   console.log(state, "statekey")
+    console.log(state, "statekey")
     return __parse ?? defaultValue;
     //return defaultValue;
 }
-export function resetStore(){
+export function resetStore() {
     store.dispatch(
         login({
-            user:null
+            user: null
         })
     )
 }

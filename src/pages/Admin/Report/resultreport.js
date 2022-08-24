@@ -13,7 +13,7 @@ import filterIcon from "../../../assets/images/filterIcon.svg";
 import editIcon from "../../../assets/images/editIcon.svg";
 import deleteIcon from "../../../assets/images/deleteIcon.svg";
 import { Table, Skeleton, Drawer, Select, DatePicker, Switch } from "antd";
-import { currencyFormat, resolveTotalGradePoint } from "../../../utils/helpers";
+import { currencyFormat } from "../../../utils/helpers";
 import logo from "../../../assets/images/17.png";
 import logoKul from "../../../assets/images/LogoKul.png";
 import absu_logo from "../../../assets/images/absu_logo.png";
@@ -28,8 +28,45 @@ import "jspdf-autotable"
 import { ca } from "date-fns/locale";
 const { Option, OptGroup } = Select;
 
-const data=[]
-class CollectionReport extends Component {
+const columns = [
+    { title: "SN", dataIndex: "key", key: "key" },
+    { title: "Matric Mumber", dataIndex: "regnumber", key: "regnumber" },
+    { title: "Name", dataIndex: "name", key: "name" },
+    { title: "Programme", dataIndex: "programme", key: "programme" },
+    { title: "Department", dataIndex: "department", key: "department" },
+    // { title: "Fixed Amount?", dataIndex: "fixAmount", key: "fixAmount" },
+    // { title: "Status", dataIndex: "status", key: "status" },
+    //   {
+    //     title: 'Action',
+    //     dataIndex: '',
+    //     key: 'x',
+    //     render: () => <a>Delete</a>,
+    //   },
+];
+
+const data = [
+    {
+        key: 1,
+        name: <input type="text" style={{border:"none", background:"transparent"}} defaultValue="O. GODSPEED MIRACLE"/>,
+        regnumber: <input type="text" style={{border:"none", background:"transparent"}} defaultValue="FPN/POL/002"/>,
+    },
+    {
+        key: 2,
+        name: "OKEKE JULIAN CHIDINMA",
+       
+    },
+    {
+        key: 3,
+        name: "DIALA EBERE ANN",
+        
+    },
+    {
+        key: 4,
+        name: "ODOGWU BINTA CHIAMAKA",
+        
+    },
+];
+class ResultReport extends Component {
     state = {
         payLoad: JSON.parse(localStorage.getItem("_IDENTITY_")),
         // pageIgnite:false,
@@ -44,11 +81,16 @@ class CollectionReport extends Component {
         dynamicRows:[],
         payloadArr:[],
         failedList:[],
-        allCourseUnitArr:[],
-        resolveArr:[],
-        
         dynamicColumns: [
-           
+            // { title: "SN", dataIndex: "key", key: "key" },
+            // { title: "Registration Number", dataIndex: "registrationNumber", key: "registrationNumber" },
+            // { title: "Name", dataIndex: "name", key: "name" },
+            // { title: "Amount", dataIndex: "amount", key: "amount" },
+            // { title: "Programme", dataIndex: "programme", key: "programme" },
+            // { title: "Department", dataIndex: "department", key: "department" },
+            // { title: "Invoice Number", dataIndex: "invoicenumber", key: "invoicenumber" },
+            // { title: "Gateway", dataIndex: "gateway", key: "gateway" },
+            // { title: "Payment Date", dataIndex: "paymentDate", key: "paymentDate" },
         ],
         dynamicColumnsConstant: [
             { title: "SN", dataIndex: "key", key: "key" },
@@ -403,13 +445,13 @@ class CollectionReport extends Component {
         this.setState({ loading: true });
         setTimeout(() => {
             this.setState({ loading: false, visible: false, saved:false, savedUpload:false, errorDialog:false });
-            // window.location.reload(true)
+            window.location.reload(true)
         }, 3000);
     };
 
     handleCancel = () => {
         this.setState({ visible: false, pageIgnite: false, paymentSetup: false, saved:false, savedUpload:false, errorDialog:false });
-        // window.location.reload(true)
+        window.location.reload(true)
     };
     loadDataError = (error) =>
         toast.error(error, {
@@ -449,8 +491,6 @@ class CollectionReport extends Component {
             [name]: value,
         });
     };
-
-
 
     handleVendorInput = (event) => {
         this.setState({ isSelectVendor: null });
@@ -545,13 +585,7 @@ class CollectionReport extends Component {
         //     var i = 0;
     };
     between = (dataIndex) => {
-        if(dataIndex >= 3 && dataIndex <= 30){
-            return true;
-        }
-        return false;
-    }
-    carryoverbadge = (dataIndex) => {
-        if(dataIndex >= 17 && dataIndex <= 30){
+        if(dataIndex == 3 || dataIndex == 4 || dataIndex == 5 || dataIndex == 6 || dataIndex == 7 || dataIndex == 8 || dataIndex == 9 || dataIndex == 10 || dataIndex == 11 || dataIndex == 12 || dataIndex == 13 || dataIndex == 14 || dataIndex == 15 || dataIndex == 16){
             return true;
         }
         return false;
@@ -688,62 +722,6 @@ class CollectionReport extends Component {
 
 
     }
-    triggerUnit = () => {
-        var sumCourseUnit = 0;
-        var allCourseUnitArr = []
-        var getUnitValuesForHead = document.querySelectorAll(".tharr select")
-        console.log(getUnitValuesForHead)
-
-        getUnitValuesForHead.forEach((x) => {
-
-            if(x.value == "Unit"){
-                // console.log(x.value)
-            }
-            else{
-                sumCourseUnit = sumCourseUnit + parseInt(x.value)
-                allCourseUnitArr.push(x.value)
-                console.log(allCourseUnitArr, "allco")
-
-            }
-            var iterate = resolveTotalGradePoint(this.state.resolveArr, allCourseUnitArr);
-            console.log(iterate)
-            console.log(sumCourseUnit, "sum")
-            console.log(allCourseUnitArr, "state sum")
-            this.setState({
-                sumCourseUnit:sumCourseUnit,
-                allCourseUnitArr: allCourseUnitArr
-            })
-        
-         })
-
-
-    }
-
-    handleCalculationInput = (data) => {
-     
-
-        var resolveArr = [];
-        var getCourseValuesForRow = document.querySelectorAll("."+data)
-        var getgpaColumn = document.getElementById(data+"gpa");
-        console.log(getCourseValuesForRow)
-        getCourseValuesForRow.forEach((x) => {
-
-            //console.log(x.value)
-            resolveArr.push(x.value)
-            console.log(resolveArr, this.state.allCourseUnitArr)
-
-            var iterate = resolveTotalGradePoint(resolveArr, this.state.allCourseUnitArr);
-            console.log(iterate)
-            // getgpaColumn.value = iterate.substring(0,4)
-            getgpaColumn.value = iterate
-            //console.log(this.state.resolveArr, "resolve")
-            this.setState({
-                resolveArr: resolveArr
-            })
-        
-         })
-    };
-
     pickRowAndSubmit = () => {
         var defaultIndex = 0;
         var rowOne = ".row"+defaultIndex;
@@ -1014,75 +992,6 @@ class CollectionReport extends Component {
                 </div> */}
 
 
-                <Drawer
-                    title="Report Filter"
-                    placement={"top"}
-                    closable={true}
-                    onClose={() => this.setState({ filterPool: false })}
-                    visible={this.state.filterPool}
-                    className="manrope-text"
-                //   key={placement}
-                >
-                    <div>
-                        <Space direction="horizontal">
-                            Date Range? &nbsp; <Switch onChange={this.toggleDateFilter} />
-                        </Space>
-                    </div>
-                    <br />
-                    <div id="dateFilter" style={{ display: 'none' }}>
-                        <Space direction="horizontal">
-                            <DatePicker onChange={this.onChangeDateFrom} />
-                            <DatePicker onChange={this.onChangeDateTo} />
-
-                        </Space>
-                    </div>
-                    <Space>
-
-                        <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleChange}>
-                            <OptGroup label="Department">
-                                <Option value="Department">Select Collection</Option>
-                                {this.state.allCollections && this.state.allCollections.map(x => {
-                                    return (
-                                        <Option value={x.id}>{x.name}</Option>
-                                    )
-                                })}
-
-                            </OptGroup>
-
-                        </Select>
-
-                        <Select defaultValue="Programme" style={{ width: 200 }} onChange={this.handleChange}>
-                            <OptGroup label="Programme">
-                                <Option value="Programme">Select Programme</Option>
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                            </OptGroup>
-
-                        </Select>
-
-                        <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleChange}>
-                            <OptGroup label="Department">
-                                <Option value="Department">Select Department</Option>
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                            </OptGroup>
-
-                        </Select>
-
-                        <Select defaultValue="Department" style={{ width: 200 }} onChange={this.handleChange}>
-                            <OptGroup label="Department">
-                                <Option value="Department">Select Gateway</Option>
-                                <Option value="jack">Jack</Option>
-                                <Option value="lucy">Lucy</Option>
-                            </OptGroup>
-
-                        </Select>
-
-
-                        <br />
-                        <button className="btn btn-primary" onClick={this.loadCollectionReportBy}>Load</button>
-                    </Space>
-                </Drawer>
                 <Fade>
                     <div className="container-fluid py-5">
                         <>
@@ -1090,7 +999,7 @@ class CollectionReport extends Component {
                                 <div className="col-12 col-sm-12 col-xl-6 mt-2 mt-xl-0">
                                     <h1 className="manrope-text" style={!isMobile ? { fontSize: "27px", color: "#2E2C34" } : { fontSize: "24px", color: "#2E2C34" }}>
                                         {/* <Unicons.UilApps size="24" className="mr-2"/> */}
-                                        OCR Manipulation <span style={{ fontSize: "18px" }}>(view/modify)</span>
+                                        Result Report <span style={{ fontSize: "18px" }}>(view)</span>
                                     </h1>
                                     {/* <p className="manrope-text-light" style={{ fontSize: "14px", marginTop: "-16px" }}>
                                 Here’s what’s going on with your fee collections
@@ -1284,31 +1193,7 @@ class CollectionReport extends Component {
                         <Fade>
                             <div className="row" style={{ textAlign: 'right' }}>
                                 <div className="col-md-12">
-                                    {/* <span style={{ fontSize: "14px" }} className="mt-4">
-
-                                        <Dropdown
-                                            visible={this.state.isMenuVisble}
-                                            overlay={
-                                                <Menu onClick={() => this.setState({ isMenuVisble: true })}>
-                                                    {this.state.dynamicColumns &&
-                                                        this.state.dynamicColumnsConstant.map((x) => {
-                                                            return (
-                                                                <Menu.Item key={x.key}>
-                                                                    {x.title} &nbsp; &nbsp; <input type="checkbox" defaultChecked={true} onClick={() => this.resolveColumnVisibilty(x)} />
-                                                                </Menu.Item>
-                                                            );
-                                                        })}
-
-                                                </Menu>
-                                            }
-                                            trigger={["click"]}
-                                        >
-
-                                            <Button onClick={this.toggleColumnView}>
-                                                Column Selection &nbsp; <EllipsisOutlined />
-                                            </Button>
-                                        </Dropdown>
-                                    </span> */}
+                                   
 
                                     <span style={{ fontSize: "14px", marginLeft: "30px", color: "#930909", cursor: "pointer", fontWeight: "600" }} className="manrope-text mr-4">
 
@@ -1321,18 +1206,18 @@ class CollectionReport extends Component {
                                             Export &nbsp; <i className="fa fa-file-pdf-o" />
                                         </Dropdown.Button>
                                     </span>
-                                    <button className="btn btn-primary manrope-text-light" style={{ fontSize: "14px" }} onClick={this.showModal}>
+                                    {/* <button className="btn btn-primary manrope-text-light" style={{ fontSize: "14px" }} onClick={this.showModal}>
                                         <i className="fa fa-plus" /> &nbsp; Upload
-                                    </button>
+                                    </button> */}
                                    
                                 </div>
                             </div>
                             <br />
-                            <div>
+                            {/* <div>
                                 <Space direction="horizontal">
                                     Autosave &nbsp; <Switch onChange={this.toggleDateFilter} />
                                 </Space>
-                            </div>
+                            </div> */}
                             <br />
                             <div id="dateFilter" style={{ display: 'none' }}>
                                 {/* <Space direction="horizontal">
@@ -1340,19 +1225,9 @@ class CollectionReport extends Component {
                                     <DatePicker onChange={this.onChangeDateTo} />
 
                                 </Space> */}
-
                                 <p style={{fontSize:"11px", color:"#03844d"}} className="">Autosave enabled. Chnages would be saved every two(2) minutes</p>
                             </div>
-                            <div className="row">
-                                <div className="col-sm-6">
-                                {this.state.sumCourseUnit > 0 ? <p style={{color:"#168a16"}}>Total Course Unit: {this.state.sumCourseUnit}</p> : null}
-
-                                </div>
-
-                            </div>
-
                             <Space className="mt-4">
-                                
                             {/* sessionList */}
                                 <Select defaultValue="Session" style={{ width: 200 }} onChange={this.handleSession}>
                                     <OptGroup label="Session">
@@ -1438,14 +1313,6 @@ class CollectionReport extends Component {
                                 <button className="btn btn-primary" onClick={this.loadUnverifiedResult}>Load</button>
                             </Space>
                             <br />
-                            {/* <Table
-    columns={columns}
-    dataSource={data}
-    scroll={{
-      x: 1500,
-      y: 300,
-    }}
-  /> */}
                             {this.state.loadSpinner ? (
                                 <>
                                     {/* <Skeleton active/> */}
@@ -1455,7 +1322,6 @@ class CollectionReport extends Component {
                             ) : (
 
                                 <Fade>
-                                    <div className="fixed-first-column" >
                                     <table class="table table-bordered table-responsive mt-3" id="dynamicTable" style={{background:"#fff"}}>
   <thead>
     <tr>
@@ -1464,8 +1330,8 @@ class CollectionReport extends Component {
             // <th scope="col">SN</th>
 
             return(
-            <th style={{background:"#fff"}} className={i == this.state.dynamicColumns?.length - 2 ? "tharr first-col" : "tharr"} scope="col" ><input defaultValue={x.title} type={"text"} style={{border:"none", background:"transparent"}}/> &nbsp;
-               {this.between(i) ? <select id={"index"+1} onChange={this.triggerUnit}>
+            <th scope="col"><input defaultValue={x.title} type={"text"} style={{border:"none", background:"transparent"}}/> &nbsp;
+               {this.between(i) ? <select>
                     <option>Unit</option>
                     <option value={"1"}>1</option>
                     <option value={"2"}>2</option>
@@ -1482,10 +1348,8 @@ class CollectionReport extends Component {
                     <option value={"13"}>13</option>
                     <option value={"14"}>14</option>
                     <option value={"15"}>15</option>
-                </select> : null} &nbsp;
-                {this.carryoverbadge(i) ? <span className="badge badge-danger">C/O</span> : null} 
+                </select> : null}
             </th>
-           
             )
         })}
       
@@ -1500,27 +1364,23 @@ class CollectionReport extends Component {
         var rowPicker = i+1
         return(
             <tr className={"row"+rowPicker}>
-                <td style={{background:"#fff"}} className="sn-col" ><input type="text" value={i+1}  style={{border:"none", background:"transparent"}} /> </td>
+                <td><input type="text" defaultValue={x.sn}  style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.registrationNumber} id={x.registrationNumber.concat('',inputName)} name={x.registrationNumber.concat('',inputName)} style={{border:"none", background:"transparent"}} className={"data"+rowPicker} /></td>
                 <td><input type="text" defaultValue={x.name}  style={{border:"none", background:"transparent"}} className={"text-uppercase data"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course1} className={"row_input"+rowPicker}  name={"row_input"+rowPicker} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput("row_input"+rowPicker)} /></td>
-                <td><input type="text" defaultValue={x.course2} style={{border:"none", background:"transparent"}} 
-                onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker}  
-                /></td>
-                <td><input type="text" defaultValue={x.course3} style={{border:"none", background:"transparent"}} 
-                onChange={() => this.handleCalculationInput(("row_input"+rowPicker))}
-                className={"row_input"+rowPicker}  /></td>
-                <td><input type="text" defaultValue={x.course4} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker}  /></td>
-                <td><input type="text" defaultValue={x.course5} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))}  className={"row_input"+rowPicker}/></td>
-                <td><input type="text" defaultValue={x.course6} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course7} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course8} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course9} style={{border:"none", background:"transparent"}}onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course10} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker}/></td>
-                <td><input type="text" defaultValue={x.course11} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker}/></td>
-                <td><input type="text" defaultValue={x.course12} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course13} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))} className={"row_input"+rowPicker} /></td>
-                <td><input type="text" defaultValue={x.course14} style={{border:"none", background:"transparent"}} onChange={() => this.handleCalculationInput(("row_input"+rowPicker))}  className={"row_input"+rowPicker}/></td>
+                <td><input type="text" defaultValue={x.course1} name={x.name} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course2} style={{border:"none", background:"transparent"}} className={"data"+rowPicker} /></td>
+                <td><input type="text" defaultValue={x.course3} style={{border:"none", background:"transparent"}} className={"data"+rowPicker} /></td>
+                <td><input type="text" defaultValue={x.course4} style={{border:"none", background:"transparent"}} className={"data"+rowPicker} /></td>
+                <td><input type="text" defaultValue={x.course5} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course6} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course7} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course8} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course9} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course10} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course11} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course12} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course13} style={{border:"none", background:"transparent"}} /></td>
+                <td><input type="text" defaultValue={x.course14} style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.carryOverCourse1} style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.carryOverCourse2} style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.carryOverCourse3} style={{border:"none", background:"transparent"}} /></td>
@@ -1537,7 +1397,7 @@ class CollectionReport extends Component {
                 <td><input type="text" defaultValue={x.carryOverCourse14} style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.gpabf} style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.total} style={{border:"none", background:"transparent"}} /></td>
-                <td style={{background:"#fff"}} className="first-col"><input type="text" defaultValue={x.gpa} id={"row_input"+rowPicker+"gpa"} style={{border:"none", background:"transparent", color:"#08b169", fontSize:"14px"}} /></td>
+                <td><input type="text" defaultValue={x.gpa} style={{border:"none", background:"transparent"}} /></td>
                 <td><input type="text" defaultValue={x.remark} style={{border:"none", background:"transparent"}} /></td>
                 
             </tr>
@@ -1558,12 +1418,10 @@ class CollectionReport extends Component {
     </tr> */}
   </tbody>
 </table>
-</div>
 <div className="">
 {this.state.dynamicRows && this.state.dynamicRows.length > 0 ? <button type="button" onClick={this.pickRowAndSubmit} className="btn btn-primary">Verify <i className="fa fa-check"/></button> : null}
 
 {this.state.showFailed ? <button type="button" onClick={() => this.setState({triggerFailed:true})} className="btn btn-danger">See Failed Saves</button> : null}
-
 </div>
 {this.state.saving ? <small>saving...</small> : null}
 <br/>
@@ -1585,7 +1443,6 @@ class CollectionReport extends Component {
 
                                         className="manrope-text table-responsive mt-4"
                                     /> */}
-                                
                                 </Fade>
                             )}
                         </Fade>
@@ -1597,4 +1454,4 @@ class CollectionReport extends Component {
     }
 }
 
-export default CollectionReport;
+export default ResultReport;

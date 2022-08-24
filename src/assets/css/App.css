@@ -14901,3 +14901,57 @@ img {
 .cursor-pointer {
     cursor: pointer;
 }
+
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    *margin-left: -100px;padding-right: 30px;
+    /*ie7*/
+  }
+  
+  tbody td, tbody th {
+    vertical-align: top;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    font-family: arial;
+    font-size: 12px;
+  }
+  
+  thead td, thead th {
+    vertical-align: top;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    width: auto;
+    /* background-color: #fff; */
+    /* color: #fff; */
+    font-family: arial;
+    font-size: 12px;
+  }
+  
+  .first-col {
+    position: absolute;
+    *position: relative;
+    /*ie7*/
+    right: 0;
+    width: 100px;
+  }
+  .sn-col {
+    position: absolute;
+    *position: relative;
+    /*ie7*/
+    left: 40px;
+    width: 162px;
+    background-color: #fff;
+
+  }
+  .outer {
+    position: relative;
+  }
+  
+  .inner {
+    overflow-x: scroll;
+    overflow-y: visible;
+    margin-left: 120px;
+    width: 300px;
+  }

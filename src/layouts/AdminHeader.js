@@ -352,13 +352,13 @@ const AdminHeader = (props) => {
 									style={{}}
 								>
 									<ul className="nav-sm flex-column nav rep_nav">
-										<NavLink to="/admin/settlementreport" tag={Link}>
-											Upload
+										<NavLink to="/admin/resultreport" tag={Link}>
+											Report(Bulk)
 										</NavLink>
 
-										<NavLink to="/admin/collectionreport" tag={Link}>
+										{/* <NavLink to="/admin/collectionreport" tag={Link}>
 											Manage result
-										</NavLink>
+										</NavLink> */}
 
 									</ul>
 								</div>

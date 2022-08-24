@@ -16,6 +16,7 @@ import SettlementReport from "../pages/Admin/Report/SettlementReport";
 import CollectionReport from "../pages/Admin/Report/ocrsheet";
 import AjaxTable from "../pages/Admin/Report/ajaxTable";
 import Resultview from "../pages/Admin/resultview";
+import ResultReport from "../pages/Admin/Report/resultreport";
 
 // import NewCollection from "../pages/SuperAdmin/NewCollection";
 
@@ -40,6 +41,7 @@ const AdminBody = (props) => {
 									<Route path={'/admin/ocr_manipulation'} component={CollectionReport} exact={true}/>
 									<Route path={'/admin/ajaxtable'} component={AjaxTable} exact={true}/>
 									<Route path={'/admin/resultview'} component={Resultview} exact={true}/>
+									<Route path={'/admin/resultreport'} component={ResultReport} exact={true}/>
 									{/* <Route path={'/admin/newCollection'} component={NewCollection} exact={true}/> */}
 									<Route path={'/admin/account_verification'} component={AccountVerification} exact={true}/>
 								</Switch>

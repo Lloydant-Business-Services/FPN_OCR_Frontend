@@ -198,7 +198,15 @@ const Endpoint = {
     getUnverifiedresultsBy: (programmeId, departmentId, sessionId, semesterId, levelId) => {
         return axios.get(`ResultVetting/ProcessSheetForDisplayAndManipulation?departmentId=${departmentId}&programmeId=${programmeId}&sessionId=${sessionId}&semesterId=${semesterId}&levelId=${levelId}`, headers)
     },
-    
+    postLevel: (data) => {
+        return axios.post(`/Level/PostLevel`,data, headers)
+    },
+    postConfirmVerifiedResult: (data) => {
+        return axios.post(`/ResultVetting/SavedAndVerifyResult`,data, headers)
+    },
+    postResultForIncubation: (data) => {
+        return axios.post(`/ResultVetting/PostResultVet`,data, fileHeaders)
+    }
     
 };
 

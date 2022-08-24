@@ -467,7 +467,7 @@ const payLoad ={
                                         <img src={filterIcon} /> &nbsp; Filter
                                     </button>
                                     <button className="btn btn-primary manrope-text-light" style={{ marginTop: "20px", fontSize: "14px" }} onClick={this.showFacultyModal}>
-                                        <i className="fa fa-plus" /> &nbsp; Add School/Faculty
+                                        <i className="fa fa-plus" /> &nbsp; Add School
                                     </button>
                                     <button className="btn btn-primary manrope-text-light" style={{ marginTop: "20px", fontSize: "14px" }} onClick={this.showModal}>
                                         <i className="fa fa-plus" /> &nbsp; Add Department

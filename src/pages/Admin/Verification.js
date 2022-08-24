@@ -280,7 +280,7 @@ class Verification extends Component {
                     <div className="row" style={!isMobile ? { marginTop: "3vh" } : null}>
                         <div className="col-sm-12 col-xl-6 mt-2 mt-xl-0">
                             <Timeline>
-                                <Link to="/admin/account_verification" to={{pathname:"/admin/account_verification"}}>
+                                <Link to="/admin/account_verification">
                                 <Timeline.Item dot={<img src={doneOval}/>} style={{cursor:'pointer'}} tag={Link} >
                                 <div className="col-sm-12 col-xl-12">
                                 <div className="row">
@@ -310,7 +310,7 @@ class Verification extends Component {
                             </div>
                                     </Timeline.Item>
                                     </Link>
-                                    <Link to="/admin/account_verification" to={{pathname:"/admin/account_verification"}}>
+                                    <Link to="/admin/account_verification" >
                                 <Timeline.Item dot={this.state.payLoad?.hasDonePersonalVerification ? <img src={doneOval}/> : null}>
                                 <div className="col-sm-12 col-xl-12">
                                 <div className="row">
@@ -337,7 +337,7 @@ class Verification extends Component {
                             </div>
                                 </Timeline.Item>
                                 </Link>
-                                <Link to="/admin/account_verification" to={{pathname:"/admin/account_verification"}}>
+                                <Link to="/admin/account_verification" >
                                 <Timeline.Item dot={this.state.payLoad?.hasDoneInstitutionVerification ? <img src={doneOval}/> : null}>
                                 <div className="col-sm-12 col-xl-12">
                                 <div className="row">
