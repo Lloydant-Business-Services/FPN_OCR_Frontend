@@ -42,7 +42,7 @@
     "react-pin-input": "^1.0.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^5.0.1",
     "react-select": "^4.3.1",
     "react-simple-invoice": "^1.0.14",
     "react-spinners": "^0.9.0",
